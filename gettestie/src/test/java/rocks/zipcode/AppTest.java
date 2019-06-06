@@ -111,6 +111,17 @@ public class AppTest {
         Integer actual = myDQ.removeLast();
 
         // Assert
-//        Assert.assertEquals(9, actual);
+        Assert.assertTrue(actual.equals(9));
+    }
+
+    @Test
+    public void vectorTest() {
+        // Given
+
+        // When
+        Integer actual = myDQ.removeLast();
+
+        // Assert
+        Assert.assertTrue(actual.equals(9));
     }
 }
