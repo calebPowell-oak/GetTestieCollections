@@ -1,7 +1,5 @@
 package rocks.zipcode;
 
-import com.sun.tools.hat.internal.model.HackJavaValue;
-import jdk.internal.org.objectweb.asm.tree.InnerClassNode;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -193,5 +191,37 @@ public class AppTest {
         Assert.assertTrue(expected.equals(3));
     }
 
+    @Test
+    public void addressIteratorTest(){
+        // Given
+        Address a = new Address("One", "Two", "Three", "Four");
+        StringBuilder x = new StringBuilder();
+
+        // When
+        for(String info : a){
+            x.append(info);
+        }
+        String expected = "OneTwoThreeFour";
+        String actual = x.toString();
+
+        // Assert
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void addressComparableTest(){
+        // Given
+        Address a = new Address("Z", "", "", "");
+        Address b = new Address("A", "","","");
+        Address[] ads = {a,b};
+
+        // When
+        Collections.sort(Arrays.asList(ads));
+        Address[] actual = ads;
+        Address[] expected = {b, a};
+
+        // Assert
+        Assert.assertArrayEquals(expected, actual);
+    }
 
 }

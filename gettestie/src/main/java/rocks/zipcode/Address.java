@@ -1,16 +1,23 @@
-package gettestie.src.main.java.rocks.zipcode;
+package rocks.zipcode;
 
-public class Address {
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class Address implements Iterable<String>, Comparable<Address>{
     private String street;
     private String town;
     private String postCode;
     private String country;
 
+    private String[] all;
+    private Integer iterationCount;
     /**
      * Construct an Address without country
      */
     public Address(String street, String town, String postCode) {
         this(street, town, postCode, "");
+         all = new String[] {street, town, postCode, country};
+         iterationCount = 0;
     }
 
     /**
@@ -21,6 +28,8 @@ public class Address {
         this.town = town;
         this.postCode = postCode;
         this.country = country;
+        iterationCount = 0;
+        all = new String[] {street, town, postCode, country};
     }
 
     /**
@@ -28,5 +37,31 @@ public class Address {
      */
     public String toString() {
         return street + "\n" + town + " " + postCode + "\n" + country + "\n";
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        return new AddressIterator();
+    }
+
+    @Override
+    public int compareTo(Address o) {
+        return street.compareTo(o.street);
+    }
+
+    class AddressIterator implements Iterator<String> {
+        @Override
+        public boolean hasNext() {
+            return iterationCount < all.length;
+        }
+
+        @Override
+        public String next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            } else {
+                return all[iterationCount++];
+            }
+        }
     }
 }
